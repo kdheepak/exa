@@ -69,8 +69,6 @@ impl Columns {
             columns.push(Column::Blocks);
         }
 
-        columns.push(Column::User);
-
         if self.group {
             columns.push(Column::Group);
         }
@@ -107,7 +105,6 @@ pub enum Column {
     FileSize,
     Timestamp(TimeType),
     Blocks,
-    User,
     Group,
     HardLinks,
     Inode,
@@ -143,7 +140,6 @@ impl Column {
             Column::FileSize      => "Size",
             Column::Timestamp(t)  => t.header(),
             Column::Blocks        => "Blocks",
-            Column::User          => "User",
             Column::Group         => "Group",
             Column::HardLinks     => "Links",
             Column::Inode         => "inode",
@@ -346,7 +342,6 @@ impl<'a, 'f> Table<'a> {
             Column::HardLinks      => file.links().render(self.colours, &self.env.numeric),
             Column::Inode          => file.inode().render(self.colours.inode),
             Column::Blocks         => file.blocks().render(self.colours),
-            Column::User           => file.user().render(self.colours, &*self.env.lock_users()),
             Column::Group          => file.group().render(self.colours, &*self.env.lock_users()),
             Column::GitStatus      => self.git_status(file).render(self.colours),
 
